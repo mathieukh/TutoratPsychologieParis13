@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        activeColor="@color/primaryTextColor"
+        badgeBackgroundColor="@color/secondaryColor"
+        icon="@drawable/ic_action_chrome_reader_mode"
+        id="@+id/news_tab"
+        inActiveColor="@color/secondaryTextColor"
+        title="@string/news_tab_title" />
+    <tab
+        activeColor="@color/primaryTextColor"
+        badgeBackgroundColor="@color/secondaryColor"
+        icon="@drawable/ic_action_event_note"
+        id="@+id/planning_tab"
+        inActiveColor="@color/secondaryTextColor"
+        title="@string/planning_tab_title" />
+    <tab
+        activeColor="@color/primaryTextColor"
+        badgeBackgroundColor="@color/secondaryColor"
+        icon="@drawable/ic_action_chat"
+        id="@+id/message_tab"
+        inActiveColor="@color/secondaryTextColor"
+        title="@string/message_tab_title" />
+</tabs>

@@ -12,6 +12,7 @@
         android:layout_height="?android:actionBarSize"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
+        android:elevation="4dp"
         android:minHeight="?attr/actionBarSize">
 
         <ImageView

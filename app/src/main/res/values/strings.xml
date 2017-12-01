@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Tutorat Psychologie Paris 13</string>
+    <string name="news_tab_title">News</string>
+    <string name="planning_tab_title">Planning</string>
+    <string name="message_tab_title">Chat</string>
+    <string name="facebook_app_id">1623771404375571</string>
 </resources>
