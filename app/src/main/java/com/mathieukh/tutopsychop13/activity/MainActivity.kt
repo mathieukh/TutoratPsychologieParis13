@@ -7,6 +7,9 @@ import com.mathieukh.tutopsychop13.Util.replaceFragment
 import com.mathieukh.tutopsychop13.activity.news.NewsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
+/*
+* Activité principale de l'application
+ */
 class MainActivity : AppCompatActivity() {
     /*
     * Fonction onCreate appelée lors de l'instanciation de l'activité

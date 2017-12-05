@@ -1,6 +1,5 @@
 package com.mathieukh.tutopsychop13
 
-import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -15,27 +14,22 @@ import android.view.ViewGroup
  */
 object Util {
 
-    fun getStatusBarHeight(cxt: Context): Int {
-        var result = 0
-        val resourceId = cxt.resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0)
-            result = cxt.resources.getDimensionPixelSize(resourceId)
-        return result
-    }
-
+    // Fonction qui permet de simplifier la transaction des fragments via le FragmentManager
     private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
         beginTransaction().func().commit()
     }
 
+    // Fonction permettant d'ajouter un fragment donné sur un container à l'id donnée
     fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
         supportFragmentManager.inTransaction { add(frameId, fragment) }
     }
 
-
+    // Fonction permettant de remplacer un fragment donné sur un container à l'id donnée
     fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
         supportFragmentManager.inTransaction { replace(frameId, fragment) }
     }
 
+    // Fonction permettant inflate via un ViewGroup directement
     fun ViewGroup.inflate(layoutRes: Int): View {
         return LayoutInflater.from(context).inflate(layoutRes, this, false)
     }
