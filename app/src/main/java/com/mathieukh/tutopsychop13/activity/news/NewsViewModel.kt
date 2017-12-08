@@ -25,9 +25,9 @@ class NewsViewModel : ViewModel() {
     }
 
     fun refreshNews() {
-        repository.getLastNews(rangeNews, object : CallbackRepository {
-            override fun onSuccess(data: Any) {
-                mNews.value = data as List<News>
+        repository.getLastNews(rangeNews, object : CallbackRepository<List<News>> {
+            override fun onSuccess(data: List<News>) {
+                mNews.value = data
                 mLoading.value = false
             }
 
