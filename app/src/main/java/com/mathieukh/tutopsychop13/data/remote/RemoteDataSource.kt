@@ -31,7 +31,7 @@ object RemoteDataSource : DataSource {
         facebookAPI = retrofit.create(FacebookService::class.java)
     }
 
-    override fun getLastNews(byRange: Int, callback: CallbackRepository) {
+    override fun getLastNews(byRange: Int, callback: CallbackRepository<List<News>>) {
         facebookAPI.getLastNews(byRange).enqueue(object : Callback<List<News>> {
 
             override fun onFailure(call: Call<List<News>>?, t: Throwable) {
