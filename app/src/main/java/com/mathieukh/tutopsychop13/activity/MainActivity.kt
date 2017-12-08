@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         // Paramétrage de l'activité
         setup()
     }
-
     /*
     * Fonction setup appelée uniquement lorsque l'on démarre l'application
     * Elle permet d'initialiser les paramétrages de l'activité

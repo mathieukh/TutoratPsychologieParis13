@@ -12,6 +12,7 @@
         android:layout_height="?android:actionBarSize"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
+        android:elevation="4dp"
         android:minHeight="?attr/actionBarSize">
 
         <ImageView
@@ -34,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
+        android:elevation="8dp"
         app:bb_behavior="shifting"
         app:bb_tabXmlResource="@xml/main_navigation_menu" />
 

@@ -1,6 +1,7 @@
 package com.mathieukh.tutopsychop13.activity.news
 
-import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,9 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.mathieukh.tutopsychop13.R
 import com.mathieukh.tutopsychop13.Util.inflate
-import com.mathieukh.tutopsychop13.data.News
+import com.mathieukh.tutopsychop13.data.entities.News
 import kotlinx.android.synthetic.main.fragment_news.*
 
 /*
@@ -26,15 +28,23 @@ class NewsFragment : Fragment() {
     // Fonction appelée lors de la création de la vue
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = container?.inflate(R.layout.fragment_news)
 
-    // Fonction appelée lorsque la vue est créée
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        // On pointe vers l'instance ViewModel de News
-        newsViewModel = ViewModelProviders.of(this).get(NewsViewModel::class.java)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        // On pointe vers l'instance ViewModel de News qu'on attache au fragment
+        newsViewModel = ViewModelProviders.of(activity!!).get(NewsViewModel::class.java)
         // On définit le LayoutManager du RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         // On définit l'adapter du RecyclerView
         recyclerView.adapter = CardAdapter(newsViewModel.mNews)
+        // On définit le listener sur le swipe
+        swipeRefreshLayout.setOnRefreshListener { newsViewModel.refreshNews() }
+        // On écoute les changements sur les news
+        newsViewModel.mNews.observe(this, Observer {
+            recyclerView.adapter.notifyDataSetChanged()
+        })
+        newsViewModel.mLoading.observe(this, Observer {
+            swipeRefreshLayout.isRefreshing = it!!
+        })
     }
 
     // Fonction static permettant d'instancier en singleton le Fragment
@@ -42,18 +52,20 @@ class NewsFragment : Fragment() {
         fun newInstance() = NewsFragment()
     }
 }
-
 /*
 * Classe CardAdapter permettant de créer l'adapter qui permettra d'afficher les news sur le RecyclerView
  */
-class CardAdapter(private val news: MutableLiveData<List<News>>) : RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
+class CardAdapter(private val news: LiveData<List<News>>) : RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
 
     // On compte la liste News ou on renvoie 0 si la liste est vue comme vide
     override fun getItemCount(): Int = news.value?.size ?: 0
 
     // On remplit le ViewHolder avec les données correctes
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        holder.mDesc.text = news.value?.get(position)?.message
+        news.value?.get(position)?.let { new ->
+            holder.mTitle.text = TimeAgo.using(new.published.time).trim().capitalize()
+            holder.mDesc.text = new.message
+        }
     }
 
     // On inflate le layout correspond pour les items du recyclerview
@@ -61,7 +73,7 @@ class CardAdapter(private val news: MutableLiveData<List<News>>) : RecyclerView.
 
     // On définit les élements de notre ViewHolder en vue de le remplir pluss tard
     class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var mTitle: TextView = itemView.findViewById(R.id.titleText)
         var mDesc: TextView = itemView.findViewById(R.id.supportingText)
     }
-
 }
