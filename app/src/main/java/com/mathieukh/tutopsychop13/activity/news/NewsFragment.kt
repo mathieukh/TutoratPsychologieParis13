@@ -42,6 +42,7 @@ class NewsFragment : Fragment() {
         newsViewModel.mNews.observe(this, Observer {
             recyclerView.adapter.notifyDataSetChanged()
         })
+        // On écoute les changements sur la valeur loading qui permet de déterminer si un chargement de données est en cours
         newsViewModel.mLoading.observe(this, Observer {
             swipeRefreshLayout.isRefreshing = it!!
         })
